@@ -11,13 +11,16 @@ body {
     background: linear-gradient(to bottom, #ffffff, #f5f5f7); /*This is a white to light gray gradient */
     color: #333; /* Tis is dark text color*/
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Full viewport height */
 }
 
 /* This will be navbar styling*/
 .navbar {
     background-color: #333; /* Dark gray background */
     color: #fff; /* White text */
-    padding: 10px 0;
+    padding: 10px 20px;
     position: fixed;
     top: 0;
     left: 0;
@@ -30,10 +33,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease-in-out;
 }
 
 .navbar ul li {
-    margin: 0 20px;
+    margin: 0 15px;
 }
 
 .navbar ul li a {
@@ -41,12 +45,85 @@ body {
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
-    transition: color 0.3s ease-in-out;
 }
 
 .navbar ul li a:hover {
     color: #f1f1f1; /* light gray hover color */
 }
+
+/* Hamburger Icon for Mobile View */
+.menu-icon {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 1100;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.menu-icon svg {
+    width: 30px;
+    height: 30px;
+    fill: #fff; /* White color for the hamburger lines */
+    cursor: pointer;
+}
+
+/* Optional hover effect */
+.menu-icon:hover svg {
+    fill: #555; /* Light gray on hover */
+}
+
+/* Collapsed Navbar Styling */
+@media (max-width: 768px) {
+    .navbar {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .navbar ul {
+        display: none;
+        flex-direction: column;
+        background-color: #333;
+        width: 100%;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        text-align: center;
+        /* Mobile Menu Hidden by Default */
+        opacity: 0;
+        transform: translateY(-20px); /* initial slide up */ 
+        transition: all 0.3s ease-in-out;
+    }
+    /* Show Menu with Animation */
+    .navbar ul.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Smooth fade for individual menu items */
+    .navbar ul li {
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+    /* Fade in items one by one */
+    .navbar ul.active li {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .menu-icon.active {
+        transform: rotate(90deg); 
+        transition: transform 0.3s ease-in-out;
+    }
+}
+
 
 /* H1 Styling on main page */
 h1 {
@@ -89,13 +166,18 @@ section {
     transform: scale(1.05); /* Slight zoom in effect when hovering */ 
 }
 
+main {
+    flex: 1;
+}
+
 /* Footer Styling */ 
 footer {
-    text-align: center;
-    margin-top: 50px;
-    padding: 20px 0;
     background-color: #333;
     color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+    width: 100%;
 }
 
 /* Responsive design */ 
@@ -113,7 +195,7 @@ footer {
     }
 
     .gallery {
-        grid-template-columns: repeat(auto-fill, min-max(250, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(250, 1fr));
     }
 
     .gallery img {
